@@ -1,0 +1,12 @@
+# IntelliJ project files
+.idea
+
+### Node template
+# Logs
+logs
+*.log
+
+.gitkeep
+node_modules
+public/__build__/
+
