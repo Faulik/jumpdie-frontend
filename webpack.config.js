@@ -25,6 +25,11 @@ module.exports = {
     chunkFilename: '[id].chunk.js'
   },
 
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: true
+  },
+
   resolve: {
     root: __dirname,
     extensions: [
