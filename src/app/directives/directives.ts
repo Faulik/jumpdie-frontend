@@ -1,1 +1,0 @@
-export var appDirectives:Array<Type> = [];

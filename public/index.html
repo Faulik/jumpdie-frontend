@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="./lib/traceur-runtime.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="lib/flexboxgrid.min.css">
     <base href="/">
 </head>
 
-<body>
-<app></app>
+<body >
+<div class="container">
+    <ui-view></ui-view>
+</div>
 </body>
 
 
 <!-- Commmon files to be cached -->
 <script src="/__build__/common.js"></script>
 <!-- Angular2 files -->
-<script src="/__build__/angular2.js"></script>
+<script src="/__build__/angular.js"></script>
 <!-- App script -->
 <script src="/__build__/app.js"></script></body>
 <!-- CreateJs -->

@@ -1,8 +1,8 @@
 import {Collision} from './collision';
-import {Hero} from './hero';
+import {Ball} from './hero';
 
 
-let PIXI:PIXI = require('pixi.js'),
+let PIXI = require('pixi.js'),
   Matter = require('matter-js/'),
   Bodies = Matter.Bodies,
   Body = Matter.Body;
@@ -14,10 +14,10 @@ let assetsLib = [
 
 export class Base {
   public renderer:PIXI.WebGLRenderer | PIXI.CanvasRenderer;
-  public engine:Matter.Engine;
-  public world:Matter.World = Matter.World;
+  public engine;
+  public world= Matter.World;
 
-  public players:Array<Matter.Body>=[];
+  public players:Array<any>=[];
 
   public assets:Array<any>;
   public lastPlatform;

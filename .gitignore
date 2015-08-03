@@ -9,4 +9,4 @@ logs
 .gitkeep
 node_modules
 public/__build__/
-
+build

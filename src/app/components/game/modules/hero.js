@@ -14,14 +14,14 @@ export class Ball extends PIXI.Sprite {
     this.velocity = {x: 5, y: 15};
   }
 
-  tick(base:Base):void {
+  tick(base):void {
     var collideables = base.getCollideables();
 
     this.calculateMov(base.hero,collideables);
 
   }
 
-  calculateMov(hero:Hero, collideables){
+  calculateMov(hero, collideables){
 
     hero.velocity.y += 1;
     var moveBy ={x:0, y:hero.velocity.y};

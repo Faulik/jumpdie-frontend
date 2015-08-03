@@ -1,21 +1,17 @@
 var webpack = require('webpack');
 var sliceArgs = Function.prototype.call.bind(Array.prototype.slice);
 var path = require('path');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 module.exports = {
-  devtool: 'souce-map',
+  devtool: 'source-map',
 
   entry: {
-    angular2: [
-      'zone.js',
-      'reflect-metadata',
-      'rtts_assert/rtts_assert',
-      'angular2/angular2',
-      'angular2/router',
-      'angular2/di'
+    angular: [
+      'angular/angular'
     ],
     app: [
-      './src/app/bootstrap'
+      './src/app/app'
     ]
   },
   output: {
@@ -25,16 +21,10 @@ module.exports = {
     chunkFilename: '[id].chunk.js'
   },
 
-  watchOptions: {
-    aggregateTimeout: 300,
-    poll: true
-  },
-
   resolve: {
     root: __dirname,
     extensions: [
       '',
-      '.ts',
       '.js',
       '.json',
       '.webpack.js'
@@ -45,38 +35,27 @@ module.exports = {
     }
   },
 
-  module: {
+   module: {
     loaders: [
+      {test: /\.css$/, loader: 'style!css'},
+      {test: /\.html$/, loader: 'raw'},
       {
-        test: /\.js$/,
-        include: [path.join(__dirname, 'node_modules', 'pixi.js')],
-        loader: 'transform?brfs'
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel'
       },
       {
         test: /\.json$/,
         include: [path.join(__dirname, 'node_modules', 'pixi.js')],
         loader: 'json'
-      },
-      {test: /\.css$/, loader: 'raw'},
-      {test: /\.html$/, loader: 'raw'},
-      {test: /\.ts$/, loader: 'typescript-simple'}
-    ],
-    noParse: [
-      /rtts_assert\/src\/rtts_assert/
+      }
     ]
   },
 
+
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'angular2',
-      minChinks: Infinity
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      filename: 'common.js'
-    }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.DedupePlugin()
   ],
 
   devServer: {
@@ -87,7 +66,6 @@ module.exports = {
     publicPath: '/__build__'
   },
   debug: true,
-  cache: true,
 
   context: __dirname,
   stats: {colors: true, reason: true}

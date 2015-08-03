@@ -1,9 +1,8 @@
-///<reference path='./modules/game.ts'/>
-
 import {Component, View} from 'angular2/angular2';
 import {Base} from './modules/game';
-let styles = require('./game.css');
-let template = require('./game.html');
+
+const styles = require('./game.css');
+const template = require('./game.html');
 
 @Component({
   selector: 'game'
