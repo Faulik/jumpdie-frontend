@@ -1,5 +1,5 @@
 import {Collision} from './collision';
-import {Base} from './game';
+import {Base} from './base';
 
 export class Ball extends PIXI.Sprite {
   public name:string;

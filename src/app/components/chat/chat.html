@@ -1,3 +1,14 @@
-<div class='chat'>
-	
+<div class='chat flex-col'>
+    <div class="messages flex">
+        <ul>
+            <p class="message" ng-repeat="message in chat.messages track by $index">
+                <span  ng-bind="::message.user"></span>:
+                <span ng-bind="::message.text"></span>
+            </p>
+        </ul>
+    </div>
+    <div class="input flex-col">
+        <textarea class="text-area" rows="3" ng-model="chat.message" placeholder="Send message"></textarea>
+        <button class="publish" ng-click="chat.sendMessage()">Send message</button>
+    </div>
 </div>

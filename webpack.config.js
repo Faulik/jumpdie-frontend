@@ -37,7 +37,7 @@ module.exports = {
 
    module: {
     loaders: [
-      {test: /\.css$/, loader: 'style!css'},
+      {test: /\.css$/, loader: 'style!css!autoprefixer-loader?browsers=last 2 versions'},
       {test: /\.html$/, loader: 'raw'},
       {
         test: /\.jsx?$/,

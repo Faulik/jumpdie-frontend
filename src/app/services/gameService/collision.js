@@ -1,4 +1,4 @@
-import {Hero} from './hero';
+//import {Hero} from './hero';
 
 
 export class Collision {
@@ -17,7 +17,7 @@ export class Collision {
 
       bounds = obj.getBounds(obj),
       cbounds,
-      collision:createjs.Rectangle = null,
+      collision = null,
       cc = 0;
 
     bounds.x = obj.localToGlobal(0, 0).x+moveBy.x;

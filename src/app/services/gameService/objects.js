@@ -1,4 +1,4 @@
-import {Base} from 'game.js';
+import {Base} from 'base.js';
 
 export class Platform extends Matter.Bodies {
   constructor() {

@@ -11,12 +11,11 @@ function routes($stateProvider) {
     .state('home', {
       url: '/',
       template: template,
-      controller: 'HomeController',
+      controller: HomeController,
       controllerAs: 'home'
     });
 }
 
 export default angular.module('app.home', [uirouter, randomNames])
   .config(routes)
-  .controller('HomeController', HomeController)
   .name;

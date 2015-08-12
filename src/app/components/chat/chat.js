@@ -1,18 +1,28 @@
-import {Component, View} from "angular2/angular2";
+import uirouter from 'angular-ui-router';
 
-const styles = require('./chat.css');
-const template = require('./chat.html');
+import ChatController from './chat.controller';
+import chatService from '../../services/chat.service';
 
-@Component({
-	selector: 'chat'
-})
-@View({
-	directives: [],
-	template: '${template}'
-})
+import './chat.css';
+import template from './chat.html';
 
-export class Chat {
-	constructor(){
-		
-	}
+function routes($stateProvider) {
+  $stateProvider
+    .state('chat', {
+      url: '/chat',
+      template: template,
+      controller: ChatController,
+      controllerAs: 'chat'
+    });
 }
+
+export default angular.module('app.chat', [uirouter, chatService])
+  .config(routes)
+  .name;
+
+export let ChatRouteState = {
+  name: 'chat',
+  template: template,
+  controller: ChatController,
+  controllerAs: 'chat'
+};
