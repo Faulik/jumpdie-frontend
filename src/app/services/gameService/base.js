@@ -7,18 +7,29 @@ import Matter from 'matter-js/build/matter'
 
 const Bodies = Matter.Bodies,
   Body = Matter.Body,
-  Runner = Matter.Runner;
+  Runner = Matter.Runner,
+  Vector = Matter.Vector;
 
 const assetsLib = [
   {name: 'HERO_IMAGE', url: 'assets/hero.png'},
   {name: 'PLATFORM_IMAGE', url: 'assets/platform.png'}
 ];
+const keyCodes = {
+  'w': 87,
+  's': 83,
+  'a': 65,
+  'd': 68,
+  'space': 32
+};
 
 export class Base {
   constructor() {
     this.players = [];
 
     this.assets = new Assets();
+
+    this.height = 600;
+    this.width = 800;
 
   }
 
@@ -36,24 +47,29 @@ export class Base {
       this.engine = newEngine
     }
 
-    this.assets.add(assetsLib).then(() => this.start(), (error) => console.error(error));
+    this.assets.add(assetsLib).then(() => this.start(),
+                                    (error) => console.error(error));
+  }
 
-    Matter.Engine.run(this.engine);
+  initPlayer() {
+    this.addPlayer(200, 200);
+    this.player = this.players[0];
   }
 
   start() {
-    this.addPlayer(200, 200);
+    this.initPlayer();
 
-    this.addPlatform(50 - this.assets.get('PLATFORM_IMAGE').texture.width / 2,
-                     this.height / 1.25);
-    var c, l = this.width / this.assets.get('PLATFORM_IMAGE').texture.width * 1.5,
-      atX = 0,
-      atY = this.height / 1.25;
+    const platformTexture = this.assets.getTexture('PLATFORM_IMAGE');
+    this.addPlatform(50 - platformTexture.width / 2, this.height);
+
+    let c;
+    const l = this.width / platformTexture.width * 1.5;
+    let atX = 0;
+    let atY = this.height / 1.25;
 
     for (c = 1; c < l; c++) {
-      atX =
-        (c - 0.5) * this.assets.get('PLATFORM_IMAGE').texture.width * 2 + (Math.random() * this.assets.get('PLATFORM_IMAGE').texture.width - this.assets.get('PLATFORM_IMAGE').texture.width / 2);
-      atY = atY + Math.random() * 300 - 150;
+      atX = (c - 0.5) * platformTexture.width * 2 + (Math.random() * platformTexture.width - platformTexture.width / 2);
+      atY = atY + Math.random() * this.height - 150;
 
       this.addPlatform(atX, atY);
     }
@@ -67,23 +83,47 @@ export class Base {
   }
 
   tick() {
-    //this.players[0].force = ({x:1,y:0});
   }
 
-  handleKeyDown() {
+  handleKeyDown($event) {
+    // keyCode don't work on ff
+    switch ($event.keyCode || $event.charCode) {
+      case keyCodes['space']:
+      case keyCodes['w']:
+      case keyCodes['w'] + 32:  // uppercase
+        this.players[0].force = Vector.create(0, -0.05);
+        break;
+      case keyCodes['s']:
+      case keyCodes['s'] + 32:  // uppercase
+        this.players[0].force = Vector.create(0, 0.05);
+        break;
+      case keyCodes['a']:
+      case keyCodes['a'] + 32:  // uppercase
+        this.players[0].force = Vector.create(-0.05, 0);
+        break;
+      case keyCodes['d']:
+      case keyCodes['d'] + 32:  // uppercase
+        this.players[0].force = Vector.create(0.05, 0);
+        break;
+    }
   }
 
   handleKeyUp() {
   }
 
-
   addPlatform(x, y) {
     x = Math.round(x);
     y = Math.round(y);
-    var platformTAsset = this.assets.get('PLATFORM_IMAGE'),
-      platform = new Matter.Bodies.rectangle(x, y, platformTAsset.texture.width,
-                                             platformTAsset.height,
-        {isStatic: true, render: {sprite: {texture: 'assets/platform.png'}}});
+    const platformTexture = this.assets.getTexture('PLATFORM_IMAGE');
+    const platform = new Matter.Bodies.rectangle(x, y, platformTexture.width,
+                                                 platformTexture.height, {
+        isStatic: true,
+        render: {
+          sprite: {
+            texture: this.assets.get('PLATFORM_IMAGE').url
+          }
+        }
+      });
 
     platform.position.x = x;
     platform.position.y = y;
@@ -100,12 +140,17 @@ export class Base {
   }
 
   addPlayer(x, y) {
-    var heroTexture = this.assets.get('HERO_IMAGE').texture,
-      hero = new Matter.Bodies.rectangle(x, y, 30, 30,
-        {render: {sprite: {texture: 'assets/hero.png'}}});
-    Matter.World.add(this.engine.world, hero);
+    let hero = new Matter.Bodies.rectangle(x, y, 30, 30, {
+      render: {
+        sprite: {
+          texture: this.assets.get('HERO_IMAGE').url
+        }
+      }
+    });
 
     this.players.push(hero);
+
+    Matter.World.add(this.engine.world, hero);
   }
 
 }

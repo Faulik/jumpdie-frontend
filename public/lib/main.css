@@ -20,6 +20,10 @@ header h1 {
     background-color: hsl(0, 100%, 100%);
 }
 
+header div[login] {
+    align-self: flex-end;
+}
+
 header a {
     font-size: large;
     vertical-align:middle;

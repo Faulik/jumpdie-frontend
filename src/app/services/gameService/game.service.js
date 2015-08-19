@@ -17,11 +17,14 @@ class gameService {
 
     this.element = element;
     this.canvas = element.getElementsByTagName('canvas')[0];
+    this.canvas.tabIndex = 0;
+    this.canvas.onkeydown = this.base.handleKeyDown.bind(this.base);
 
     window.addEventListener('resize', this.resizeCanvas.bind(this), false);
   }
 
   removeCanvas() {
+    this.base.stop();
     this.base.remove();
   }
 

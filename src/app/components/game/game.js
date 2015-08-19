@@ -19,7 +19,7 @@ function routes($stateProvider) {
       views: {
         'sidebar': ChatRouteState,
         'main':{
-          template: '<div class="flex" id="game-canvas-wrap"></div>',
+          template: '<div class="flex" id="game-canvas-wrap" ></div>',
           controller: GameController,
           controllerAs: 'game',
           onExit: () => {this.stop()}

@@ -4,7 +4,7 @@ class chatService {
   constructor($rootScope) {
     ROOTSCOPE.set(this, $rootScope);
 
-    this.ws = new WebSocket("ws://192.168.1.44/message");
+    this.ws = new WebSocket("ws://" + window.location.host + "/ws/message");
     this.messages = [{'user':'server', 'text':'connecting...'}];
 
     this.ws.onmessage = angular.bind(this, this.handleOnMessage);

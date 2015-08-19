@@ -21,6 +21,10 @@ export default class Assets {
     return this.assets[name];
   }
 
+  getTexture(name) {
+    return this.assets[name].texture;
+  }
+
   onComplete(loader, resources) {
     this.assets = resources;
   }
